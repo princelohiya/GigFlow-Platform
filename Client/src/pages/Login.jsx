@@ -12,7 +12,10 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await newRequest.post("/auth/login", { username, password });
+      const res = await newRequest.post("/auth/login", {
+        email: username,
+        password,
+      });
       localStorage.setItem("currentUser", JSON.stringify(res.data));
       navigate("/");
       alert("Login Successful");

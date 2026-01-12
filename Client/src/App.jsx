@@ -9,11 +9,13 @@ import {
   Link,
 } from "react-router-dom";
 import Login from "./pages/login";
+import Register from "./pages/Register";
+import Home from "./pages/Home";
+import Navbar from "./Components/Navbar";
+import Gigs from "./pages/Gigs";
+import Gig from "./pages/Gig";
 
 // Placeholder components (We will replace these later)
-const Navbar = () => (
-  <div className="p-4 bg-gray-800 text-white">Navbar Component</div>
-);
 const Footer = () => (
   <div className="p-4 bg-gray-800 text-white mt-auto">Footer Component</div>
 );
@@ -55,14 +57,14 @@ function App() {
       <Routes>
         {/* Routes WITH Navbar & Footer */}
         <Route path="/" element={<Layout />}>
-          <Route index element={<Placeholder />} />
-          <Route path="gigs" element={<Placeholder />} />
-          <Route path="gig/:id" element={<Placeholder />} />
+          <Route index element={<Home />} />
+          <Route path="gigs" element={<Gigs />} />
+          <Route path="gig/:id" element={<Gig />} />
         </Route>
 
         {/* Routes WITHOUT Navbar & Footer (Clean pages) */}
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Placeholder />} />
+        <Route path="/register" element={<Register />} />
 
         {/* Fallback for unknown routes */}
         <Route path="*" element={<Navigate to="/" replace />} />
