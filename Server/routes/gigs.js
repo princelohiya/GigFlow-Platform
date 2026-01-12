@@ -7,6 +7,17 @@ const { verifyToken } = require("../middleware/verifyToken.js");
 
 //gigs = jobs
 
+// routes/gigs.js (Add this above the generic '/' route)
+router.get("/single/:id", async (req, res) => {
+  try {
+    const gig = await Gig.findById(req.params.id);
+    if (!gig) return res.status(404).send("Gig not found!");
+    res.status(200).send(gig);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 // GET /api/gigs (Fetch all open gigs with search)
 router.get("/", async (req, res) => {
   const q = req.query.search;
@@ -39,4 +50,5 @@ router.post("/", verifyToken, async (req, res) => {
     res.status(500).send(err);
   }
 });
+
 module.exports = router;
