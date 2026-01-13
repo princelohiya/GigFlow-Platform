@@ -23,7 +23,7 @@ const GigCard = ({ item }) => {
               </span>
 
               <span className=" text-sm">
-                User ID: {item.ownerId._id.substring(0, 10)}...
+                {/* User ID: {item.ownerId._id.substring(0, 10)}... */}
               </span>
             </div>
           </div>

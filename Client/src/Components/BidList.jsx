@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from "react";
 import newRequest from "../utils/newRequest";
+// 1. Import Socket Client
+import { io } from "socket.io-client";
 
 const BidList = ({ gigId, onHireComplete }) => {
   const [bids, setBids] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // 2. Add Socket State
+  const [socket, setSocket] = useState(null);
+
+  // 3. Initialize Socket (Send Only)
+  useEffect(() => {
+    const newSocket = io("http://localhost:3000");
+    setSocket(newSocket);
+    return () => newSocket.disconnect();
+  }, []);
 
   // API 1: Fetch all bids for this gig
   useEffect(() => {
@@ -21,10 +33,18 @@ const BidList = ({ gigId, onHireComplete }) => {
     fetchBids();
   }, [gigId]);
 
-  // API 2: The Hiring Logic
-  const handleHire = async (bidId) => {
+  // API 2: The Hiring Logic + Socket Emit
+  // Modified to accept 'freelancerId'
+  const handleHire = async (bidId, freelancerId) => {
     try {
       await newRequest.patch(`/bids/${bidId}/hire`);
+
+      // 4. Emit the Notification Event
+      socket.emit("sendNotification", {
+        receiverId: freelancerId,
+        message: "Congratulations! You have been hired for a new project!",
+      });
+
       // Notify parent to refresh the Gig status (Open -> Assigned)
       onHireComplete();
     } catch (err) {
@@ -38,7 +58,7 @@ const BidList = ({ gigId, onHireComplete }) => {
     return <p className="text-gray-400 italic">No bids placed yet.</p>;
 
   return (
-    <div className="flex flex-col gap-4 mt-4">
+    <div className="flex flex-col gap-4 mt-4 ">
       <h3 className="font-bold text-xl text-gray-800">
         Proposals ({bids.length})
       </h3>
@@ -46,7 +66,7 @@ const BidList = ({ gigId, onHireComplete }) => {
       {bids.map((bid) => (
         <div
           key={bid._id}
-          className={`p-4 border rounded-md flex justify-between items-center ${
+          className={`p-4 border border-slate-300 rounded-md flex justify-between items-center ${
             bid.status === "rejected" ? "opacity-50 bg-gray-100" : "bg-white"
           }`}
         >
@@ -72,8 +92,9 @@ const BidList = ({ gigId, onHireComplete }) => {
           <div>
             {bid.status === "pending" && (
               <button
-                onClick={() => handleHire(bid._id)}
-                className="bg-black text-white px-4 py-2 rounded font-bold hover:bg-gray-800 transition shadow-md"
+                // 5. Update onClick to pass the freelancer ID!
+                onClick={() => handleHire(bid._id, bid.freelancerId._id)}
+                className="bg-gray-900 text-white px-4 py-2 rounded font-bold hover:bg-gray-800 transition shadow-md"
               >
                 Hire
               </button>

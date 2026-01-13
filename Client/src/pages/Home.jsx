@@ -11,6 +11,10 @@ const Home = () => {
     }
   };
 
+  const handlePopularTagClick = (tag) => {
+    navigate(`/gigs?search=${tag}`);
+  };
+
   const handleEnter = (e) => {
     if (e.key === "Enter") handleSearch();
   };
@@ -26,7 +30,7 @@ const Home = () => {
         </h1>
 
         {/* Search Bar */}
-        <div className="bg-white rounded flex items-center justify-between w-full max-w-2xl h-12 overflow-hidden mt-4">
+        <div className="bg-white rounded-lg flex items-center justify-between w-full max-w-2xl h-12 overflow-hidden mt-4">
           <div className="flex items-center gap-2 pl-4 w-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -59,18 +63,31 @@ const Home = () => {
         </div>
 
         {/* Popular Tags */}
+
         <div className="flex gap-4 items-center text-sm font-semibold mt-2">
           <span>Popular:</span>
-          <button className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition">
+          <button
+            onClick={() => handlePopularTagClick("Web Design")}
+            className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
+          >
             Web Design
           </button>
-          <button className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition">
+          <button
+            onClick={() => handlePopularTagClick("WordPress")}
+            className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
+          >
             WordPress
           </button>
-          <button className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition">
+          <button
+            onClick={() => handlePopularTagClick("Logo Design")}
+            className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
+          >
             Logo Design
           </button>
-          <button className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition">
+          <button
+            onClick={() => handlePopularTagClick("AI Services")}
+            className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
+          >
             AI Services
           </button>
         </div>

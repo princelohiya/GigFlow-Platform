@@ -1,18 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import newRequest from "../utils/newRequest";
+// 1. Import Socket Client
+import { io } from "socket.io-client";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-
-  // Get current user from LocalStorage
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  // 2. Add Socket State
+  const [socket, setSocket] = useState(null);
+  const [notification, setNotification] = useState(null);
+
+  // 3. Socket Logic: Connect & Listen
+  useEffect(() => {
+    if (currentUser) {
+      // Connect to the Backend (ensure port matches your server, usually 3000)
+      const newSocket = io("http://localhost:3000");
+      setSocket(newSocket);
+
+      // Tell Backend "I am here"
+      newSocket.emit("addUser", currentUser._id);
+
+      // Listen for "You got hired!" messages
+      newSocket.on("getNotification", (data) => {
+        setNotification(data.message);
+        // Hide alert after 5 seconds
+        setTimeout(() => setNotification(null), 5000);
+      });
+
+      return () => newSocket.disconnect();
+    }
+  }, [currentUser?._id]);
 
   const handleLogout = async () => {
     try {
-      await newRequest.post("/auth/logout"); // Backend clears cookie
-      localStorage.removeItem("currentUser"); // Frontend clears user data
+      await newRequest.post("/auth/logout");
+      localStorage.removeItem("currentUser");
+      // Disconnect socket manually on logout
+      if (socket) socket.disconnect();
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -21,6 +48,13 @@ const Navbar = () => {
 
   return (
     <div className="flex flex-col bg-white sticky top-0 z-50 transition-all duration-300 border-b border-gray-300">
+      {/* 4. The Notification Banner (Only shows when message arrives) */}
+      {notification && (
+        <div className="bg-green-600 text-white text-center py-2 font-bold animate-pulse shadow-md">
+          🔔 {notification}
+        </div>
+      )}
+
       <div className="max-w-7xl w-full mx-auto px-5 py-5 flex justify-between items-center">
         {/* LOGO */}
         <div className="font-bold text-3xl tracking-tighter cursor-pointer">
@@ -33,13 +67,10 @@ const Navbar = () => {
 
         {/* LINKS */}
         <div className="flex items-center gap-6 font-medium text-gray-500">
-          <Link
-            to="/gigs"
-            className="hidden sm:block hover:text-green-500 transition"
-          >
+          <Link to="/gigs" className=" hover:text-green-500 transition">
             Explore
           </Link>
-          <Link to="/add" className="hover:text-green-500">
+          <Link to="/add" className="hidden sm:block hover:text-green-500">
             Add Gig
           </Link>
           <span className="hidden sm:block hover:text-green-500 transition cursor-pointer">
@@ -82,14 +113,12 @@ const Navbar = () => {
 
               {/* DROPDOWN MENU */}
               {open && (
-                <div className="absolute top-12 right-0 p-5 bg-white rounded-lg border border-gray-200 shadow-xl w-48 flex flex-col gap-3 text-gray-500 font-normal">
-                  {/* Show 'Add Gig' only if user is NOT just a buyer? 
-                      In your logic, anyone can post, so we show it to everyone. */}
+                <div className="absolute top-14 right-1 p-4 bg-white rounded-lg border border-gray-200 shadow-xl w-48 flex flex-col gap-3 text-gray-500 font-normal">
+                  <Link to="/gigs" className=" hover:text-green-500 transition">
+                    Explore
+                  </Link>
                   <Link to="/add" className="hover:text-green-500">
                     Add New Gig
-                  </Link>
-                  <Link to="/orders" className="hover:text-green-500">
-                    Orders
                   </Link>
                   <Link to="/messages" className="hover:text-green-500">
                     Messages

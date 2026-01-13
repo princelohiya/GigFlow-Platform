@@ -42,6 +42,22 @@ const Gigs = () => {
             freelancers.
           </p>
         </div>
+        {/* Search Bar */}
+        <div className="w-full">
+          <input
+            type="text"
+            placeholder="Search for gigs..."
+            className="w-full border border-slate-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                const query = e.target.value;
+                window.location.href = `/gigs?search=${encodeURIComponent(
+                  query
+                )}`;
+              }
+            }}
+          />
+        </div>
 
         {/* Grid Display */}
         {isLoading ? (

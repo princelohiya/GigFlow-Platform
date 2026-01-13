@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import newRequest from "../utils/newRequest";
-import BidList from "../components/BidList"; // <--- Import the new component
+import BidList from "../Components/BidList";
 
 const Gig = () => {
   const { id } = useParams();
@@ -66,14 +66,14 @@ const Gig = () => {
           <h1 className="text-3xl font-bold text-gray-800">{gig.title}</h1>
 
           {/* Gig Description */}
-          <div className="border p-5 rounded bg-gray-50">
+          <div className="border border-slate-200 p-5 rounded bg-gray-100">
             <h2 className="font-bold text-lg mb-4">About This Job</h2>
             <p className="text-gray-600 leading-7">{gig.description}</p>
           </div>
 
           {/* --- THE NEW BIDS SECTION (Only visible to Owner) --- */}
           {isOwner && (
-            <div className="mt-8 border-t pt-8">
+            <div className="mt-8 border-t pt-8 border-slate-300">
               <BidList
                 gigId={id}
                 onHireComplete={() => window.location.reload()}
@@ -115,13 +115,13 @@ const Gig = () => {
                     <input
                       type="number"
                       placeholder="Price"
-                      className="border p-2 rounded"
+                      className="border p-2 rounded border-slate-300"
                       onChange={(e) => setBidPrice(e.target.value)}
                       required
                     />
                     <textarea
                       placeholder="Cover letter"
-                      className="border p-2 rounded"
+                      className="border p-2 rounded border-slate-300 h-48 resize-none"
                       onChange={(e) => setBidMessage(e.target.value)}
                       required
                     />
