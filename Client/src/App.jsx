@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import Navbar from "./Components/Navbar";
 import Gigs from "./pages/Gigs";
 import Gig from "./pages/Gig";
+import Add from "./pages/Add";
 
 // Placeholder components (We will replace these later)
 const Footer = () => (
@@ -60,9 +61,11 @@ function App() {
           <Route index element={<Home />} />
           <Route path="gigs" element={<Gigs />} />
           <Route path="gig/:id" element={<Gig />} />
+          <Route path="/add" element={<Add />} />
         </Route>
 
         {/* Routes WITHOUT Navbar & Footer (Clean pages) */}
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 

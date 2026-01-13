@@ -17,9 +17,15 @@ const GigCard = ({ item }) => {
               {/* Extract first letter of owner ID or fetch owner name via populate if available */}
               U
             </div>
-            <span className="font-bold text-sm">
-              User ID: {item.ownerId.substring(0, 10)}...
-            </span>
+            <div className="flex flex-col ">
+              <span className="font-bold text-sm">
+                Username : {item.ownerId.username || "Unknown"}
+              </span>
+
+              <span className=" text-sm">
+                User ID: {item.ownerId._id.substring(0, 10)}...
+              </span>
+            </div>
           </div>
 
           {/* Title */}

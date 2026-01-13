@@ -34,9 +34,6 @@ const Gigs = () => {
       <div className="w-full max-w-7xl flex flex-col gap-6">
         {/* Breadcrumb / Title */}
         <div className="flex flex-col gap-2">
-          <span className="text-gray-500 text-sm uppercase font-light">
-            GigFlow Graphics & Design
-          </span>
           <h1 className="text-3xl font-bold text-gray-800">
             {search ? `Results for "${search.split("=")[1]}"` : "All Gigs"}
           </h1>
@@ -44,30 +41,6 @@ const Gigs = () => {
             Explore the boundaries of art and technology with GigFlow's
             freelancers.
           </p>
-        </div>
-
-        {/* Filters Bar (Visual Only for now) */}
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center gap-3">
-            <span className="text-gray-500 font-medium">Budget:</span>
-            <input
-              type="number"
-              placeholder="min"
-              className="border p-1 rounded w-20"
-            />
-            <input
-              type="number"
-              placeholder="max"
-              className="border p-1 rounded w-20"
-            />
-            <button className="bg-gray-800 text-white px-4 py-1 rounded font-medium">
-              Apply
-            </button>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-gray-400 text-sm">Sort by</span>
-            <span className="font-semibold text-gray-800">Newest</span>
-          </div>
         </div>
 
         {/* Grid Display */}

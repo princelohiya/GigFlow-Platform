@@ -20,7 +20,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex flex-col bg-white sticky top-0 z-50 transition-all duration-300">
+    <div className="flex flex-col bg-white sticky top-0 z-50 transition-all duration-300 border-b border-gray-300">
       <div className="max-w-7xl w-full mx-auto px-5 py-5 flex justify-between items-center">
         {/* LOGO */}
         <div className="font-bold text-3xl tracking-tighter cursor-pointer">
@@ -38,6 +38,9 @@ const Navbar = () => {
             className="hidden sm:block hover:text-green-500 transition"
           >
             Explore
+          </Link>
+          <Link to="/add" className="hover:text-green-500">
+            Add Gig
           </Link>
           <span className="hidden sm:block hover:text-green-500 transition cursor-pointer">
             English
@@ -102,30 +105,6 @@ const Navbar = () => {
               )}
             </div>
           )}
-        </div>
-      </div>
-
-      {/* SECONDARY MENU (Categories) - Optional, similar to Fiverr */}
-      <div className="border-t border-b border-gray-100 py-3 bg-gray-50 overflow-x-auto">
-        <div className="max-w-7xl mx-auto px-5 flex gap-8 text-sm text-gray-500 font-light whitespace-nowrap">
-          <Link to="/gigs?cat=design" className="hover:text-black">
-            Graphics & Design
-          </Link>
-          <Link to="/gigs?cat=web" className="hover:text-black">
-            Programming & Tech
-          </Link>
-          <Link to="/gigs?cat=animation" className="hover:text-black">
-            Video & Animation
-          </Link>
-          <Link to="/gigs?cat=writing" className="hover:text-black">
-            Writing & Translation
-          </Link>
-          <Link to="/gigs?cat=ai" className="hover:text-black">
-            AI Services
-          </Link>
-          <Link to="/gigs?cat=marketing" className="hover:text-black">
-            Digital Marketing
-          </Link>
         </div>
       </div>
     </div>
