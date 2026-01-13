@@ -1,11 +1,25 @@
 require("dotenv").config();
-
 const express = require("express");
-
 const cors = require("cors");
 const mainRouter = require("./routes/index.js");
 const cookieParser = require("cookie-parser");
+// 1. IMPORT HTTP AND SOCKET.IO
+const http = require("http");
+const { Server } = require("socket.io");
+
 const app = express();
+
+// 2. CREATE HTTP SERVER
+// We wrap the express app so we can reuse the server for sockets
+const server = http.createServer(app);
+
+// 3. CONFIGURE SOCKET.IO
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173", // Your frontend URL
+    methods: ["GET", "POST"],
+  },
+});
 
 app.use(cookieParser());
 app.use(express.json());
@@ -23,6 +37,53 @@ app.get("/health", (req, res) => {
 
 app.use("/", mainRouter);
 
-app.listen(3000, () => {
-  console.log("Listening on 3000 port");
+// ---------------------------------------------------------
+// 4. SOCKET.IO LOGIC (The "Post Office")
+// ---------------------------------------------------------
+let onlineUsers = []; // Stores { userId, socketId }
+
+const addUser = (userId, socketId) => {
+  // Prevent duplicates
+  if (!onlineUsers.some((user) => user.userId === userId)) {
+    onlineUsers.push({ userId, socketId });
+  }
+};
+
+const removeUser = (socketId) => {
+  onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
+};
+
+const getUser = (userId) => {
+  return onlineUsers.find((user) => user.userId === userId);
+};
+
+io.on("connection", (socket) => {
+  // A. When a user logs in (Frontend sends 'addUser')
+  socket.on("addUser", (userId) => {
+    addUser(userId, socket.id);
+    console.log("User connected. Total Online:", onlineUsers.length);
+  });
+
+  // B. Send Notification
+  // Triggered when the Client clicks "Hire"
+  socket.on("sendNotification", ({ receiverId, message }) => {
+    const receiver = getUser(receiverId);
+    if (receiver) {
+      io.to(receiver.socketId).emit("getNotification", {
+        message,
+      });
+    }
+  });
+
+  // C. Disconnect
+  socket.on("disconnect", () => {
+    removeUser(socket.id);
+    console.log("User disconnected!");
+  });
+});
+// ---------------------------------------------------------
+
+// 5. IMPORTANT: LISTEN ON 'server', NOT 'app'
+server.listen(3000, () => {
+  console.log("Listening on 3000 port (HTTP + Socket)");
 });
