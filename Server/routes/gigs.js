@@ -7,7 +7,6 @@ const { verifyToken } = require("../middleware/verifyToken.js");
 
 //gigs = jobs
 
-// routes/gigs.js (Add this above the generic '/' route)
 router.get("/single/:id", async (req, res) => {
   try {
     const gig = await Gig.findById(req.params.id);
@@ -29,7 +28,11 @@ router.get("/", async (req, res) => {
   }
 
   try {
-    const gigs = await Gig.find(filters).sort({ createdAt: -1 });
+    // "ownerId" is the field in Gig model
+    // "username email" selects which fields to retrieve from the User model
+    const gigs = await Gig.find(filters)
+      .populate("ownerId", "username")
+      .sort({ createdAt: -1 });
     res.status(200).json(gigs);
   } catch (err) {
     res.status(500).send(err);

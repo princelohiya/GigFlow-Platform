@@ -35,15 +35,15 @@ router.post("/login", async (req, res) => {
     );
 
     // Send HttpOnly Cookie
+    // FIX: Send the _id along with other details
+    const { password, ...otherDetails } = user._doc; // user._doc extracts the clean data object
+
     res
-      .cookie("accessToken", token, {
-        httpOnly: true,
-        secure: true, // Use true in production (HTTPS)
-      })
+      .cookie("accessToken", token, { httpOnly: true })
       .status(200)
-      .send("Login successful");
+      .json(otherDetails); // This sends { _id, username, email, ... }
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).send(err);
   }
 });
 
