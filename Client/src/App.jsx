@@ -17,16 +17,23 @@ import Gig from "./pages/Gig";
 import Add from "./pages/Add";
 
 // Placeholder components (We will replace these later)
-const Footer = () => (
-  <div className="p-4 bg-gray-800 text-white mt-auto">Footer Component</div>
-);
+const Footer = () => {
+  return (
+    <div className="bg-gray-900 py-8 text-gray-200 text-sm mt-auto border-t border-gray-800">
+      <div className="max-w-7xl mx-auto px-5 flex flex-col sm:flex-row justify-between items-center gap-4">
+        {/* Simple Brand Logo */}
+        <div className="font-bold text-xl tracking-tighter">
+          Gig<span className="text-green-500">Flow</span>.
+        </div>
 
-// Import your pages
-// import Home from "./pages/Home";
-// import Login from "./pages/Login";
-// import Register from "./pages/Register";
-// import Gigs from "./pages/Gigs";
-// import Gig from "./pages/Gig";
+        {/* Copyright Text */}
+        <div className="text-gray-400">
+          © {new Date().getFullYear()} GigFlow International Ltd.
+        </div>
+      </div>
+    </div>
+  );
+};
 
 function App() {
   // Layout Wrapper: Adds Navbar and Footer to specific pages

@@ -73,9 +73,6 @@ const Navbar = () => {
           <Link to="/add" className="hidden sm:block hover:text-green-500">
             Add Gig
           </Link>
-          <span className="hidden sm:block hover:text-green-500 transition cursor-pointer">
-            English
-          </span>
 
           {/* USER NOT LOGGED IN */}
           {!currentUser && (

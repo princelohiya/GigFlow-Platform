@@ -68,25 +68,25 @@ const Home = () => {
           <span>Popular:</span>
           <button
             onClick={() => handlePopularTagClick("Web Design")}
-            className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
+            className="cursor-pointer border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
           >
             Web Design
           </button>
           <button
             onClick={() => handlePopularTagClick("WordPress")}
-            className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
+            className="cursor-pointer border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
           >
             WordPress
           </button>
           <button
             onClick={() => handlePopularTagClick("Logo Design")}
-            className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
+            className="cursor-pointer border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
           >
             Logo Design
           </button>
           <button
             onClick={() => handlePopularTagClick("AI Services")}
-            className="border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
+            className="cursor-pointer border border-white rounded-full px-3 py-1 hover:bg-white hover:text-green-900 transition"
           >
             AI Services
           </button>

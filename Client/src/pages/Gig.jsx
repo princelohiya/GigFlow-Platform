@@ -125,7 +125,7 @@ const Gig = () => {
                       onChange={(e) => setBidMessage(e.target.value)}
                       required
                     />
-                    <button className="bg-green-500 text-white font-bold py-2 rounded">
+                    <button className="bg-green-500 text-white font-bold py-2 rounded cursor-pointer">
                       Submit Bid
                     </button>
                   </>

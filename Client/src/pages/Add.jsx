@@ -80,7 +80,7 @@ const Add = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="bg-green-500 text-white font-bold p-4 rounded hover:bg-green-600 transition duration-200"
+            className="bg-green-500 text-white font-bold p-4 rounded hover:bg-green-600 transition duration-200 cursor-pointer"
           >
             Publish Gig
           </button>

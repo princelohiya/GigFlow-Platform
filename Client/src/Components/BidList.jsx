@@ -94,7 +94,7 @@ const BidList = ({ gigId, onHireComplete }) => {
               <button
                 // 5. Update onClick to pass the freelancer ID!
                 onClick={() => handleHire(bid._id, bid.freelancerId._id)}
-                className="bg-gray-900 text-white px-4 py-2 rounded font-bold hover:bg-gray-800 transition shadow-md"
+                className="bg-gray-900 text-white px-4 py-2 rounded font-bold hover:bg-gray-800 transition shadow-md cursor-pointer"
               >
                 Hire
               </button>
