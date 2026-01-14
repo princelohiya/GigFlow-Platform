@@ -6,9 +6,18 @@ const cookieParser = require("cookie-parser");
 // 1. IMPORT HTTP AND SOCKET.IO
 const http = require("http");
 const { Server } = require("socket.io");
+const { default: mongoose } = require("mongoose");
 
 const app = express();
 
+const connect = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("Connected to MongoDB!");
+  } catch (error) {
+    console.error("Database connection failed:", error);
+  }
+};
 // 2. CREATE HTTP SERVER
 // We wrap the express app so we can reuse the server for sockets
 const server = http.createServer(app);
@@ -86,6 +95,6 @@ io.on("connection", (socket) => {
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
-  connect(); // Your DB connection function
+  connect();
   console.log(`Backend server (HTTP + Socket) running on port ${PORT}`);
 });
