@@ -27,20 +27,25 @@ const allowedOrigins = [
   "https://gigflowpl.vercel.app",
 ];
 
-// 3. CONFIGURE SOCKET.IO
+// 1. Socket.io: Allow All Origins
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
+    // This function accepts ANY origin
+    origin: (origin, callback) => {
+      callback(null, true);
+    },
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
 app.use(cookieParser());
 app.use(express.json());
 
+// 2. Express: Allow All Origins
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: true, // 'true' means "reflect the request origin" (allows everyone)
     credentials: true,
   })
 );
