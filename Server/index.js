@@ -22,10 +22,15 @@ const connect = async () => {
 // We wrap the express app so we can reuse the server for sockets
 const server = http.createServer(app);
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://gigflowpl.vercel.app",
+];
+
 // 3. CONFIGURE SOCKET.IO
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // Your frontend URL
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
   },
 });
@@ -35,7 +40,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   })
 );
