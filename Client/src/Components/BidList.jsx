@@ -12,8 +12,10 @@ const BidList = ({ gigId, onHireComplete }) => {
   const [socket, setSocket] = useState(null);
 
   // 3. Initialize Socket (Send Only)
+  const url = "https://gigflow-platform-lfjc.onrender.com";
+  // const url = "http://localhost:3000";
   useEffect(() => {
-    const newSocket = io("http://localhost:3000");
+    const newSocket = io(url);
     setSocket(newSocket);
     return () => newSocket.disconnect();
   }, []);

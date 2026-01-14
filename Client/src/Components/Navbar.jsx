@@ -17,7 +17,7 @@ const Navbar = () => {
   useEffect(() => {
     if (currentUser) {
       // Connect to the Backend (ensure port matches your server, usually 3000)
-      const url = "https://gigflow-api.onrender.com/api/";
+      const url = "https://gigflow-platform-lfjc.onrender.com";
       // const url = "http://localhost:3000";
 
       const newSocket = io(url);
