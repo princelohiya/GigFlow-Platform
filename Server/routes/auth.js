@@ -39,7 +39,11 @@ router.post("/login", async (req, res) => {
     const { password, ...otherDetails } = user._doc; // user._doc extracts the clean data object
 
     res
-      .cookie("accessToken", token, { httpOnly: true })
+      .cookie("accessToken", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
       .status(200)
       .json(otherDetails); // This sends { _id, username, email, ... }
   } catch (err) {
