@@ -83,7 +83,9 @@ io.on("connection", (socket) => {
 });
 // ---------------------------------------------------------
 
-// 5. IMPORTANT: LISTEN ON 'server', NOT 'app'
-server.listen(3000, () => {
-  console.log("Listening on 3000 port (HTTP + Socket)");
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+  connect(); // Your DB connection function
+  console.log(`Backend server (HTTP + Socket) running on port ${PORT}`);
 });
