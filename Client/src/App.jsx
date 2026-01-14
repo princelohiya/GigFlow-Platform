@@ -1,5 +1,4 @@
 // src/App.jsx
-import React from "react";
 import {
   BrowserRouter,
   Routes,
@@ -42,7 +41,7 @@ function App() {
       <div className="flex flex-col min-h-screen">
         <Navbar />
         {/* Outlet renders the child route's element (Home, Gigs, etc.) */}
-        <div className="flex-grow">
+        <div className="flex-1">
           <Outlet />
         </div>
         <Footer />
