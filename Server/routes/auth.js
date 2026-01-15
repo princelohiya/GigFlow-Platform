@@ -55,8 +55,8 @@ router.post("/login", async (req, res) => {
 router.post("/logout", (req, res) => {
   res
     .clearCookie("accessToken", {
-      sameSite: "strict",
-      secure: false, // Set to true in production
+      sameSite: "none", // MUST match login
+      secure: true,
     })
     .status(200)
     .send("User has been logged out.");
