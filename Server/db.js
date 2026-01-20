@@ -1,17 +1,4 @@
 const mongoose = require("mongoose");
-console.log("Connecting to database...");
-const url = process.env.MONGO_URI;
-
-async function dbconnect() {
-  console.log("Database connection started...");
-  try {
-    await mongoose.connect(url);
-    console.log("Database connected successfully.");
-  } catch (err) {
-    console.error("Database connection error:", err);
-  }
-}
-dbconnect();
 
 const userSchema = new mongoose.Schema(
   {
@@ -29,7 +16,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const gigSchema = new mongoose.Schema(
@@ -57,7 +44,7 @@ const gigSchema = new mongoose.Schema(
       default: "open",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 // Index for search optimization
 gigSchema.index({ title: "text" });
@@ -87,7 +74,7 @@ const bidSchema = new mongoose.Schema(
       default: "pending",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const User = mongoose.model("User", userSchema);

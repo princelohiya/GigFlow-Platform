@@ -44,7 +44,7 @@ app.use(
   cors({
     origin: allowedOrigins,
     credentials: true,
-  })
+  }),
 );
 
 app.get("/health", (req, res) => {
